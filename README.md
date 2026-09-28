@@ -1,12 +1,67 @@
-# OWASP Benchmark for Java
-The OWASP Benchmark Project is a Java test suite designed to verify the speed and accuracy of vulnerability detection tools. It is a fully runnable open source web application that can be analyzed by any type of Application Security Testing (AST) tool, including SAST, DAST (like <a href="https://www.zaproxy.org/">ZAP</a>), and IAST tools. The intent is that all the vulnerabilities deliberately included in and scored by the Benchmark are actually exploitable so it's a fair test for any kind of application vulnerability detection tool.
+# sanity-scan
 
-The Benchmark project also includes scorecard generators for numerous open source and commercial AST tools, and the set of supported tools is growing all the time. This scoring capability is implemented in the BenchmarkUtils project, which is at: https://github.com/OWASP-Benchmark/BenchmarkUtils.
+# load test branch
+This branch includes 80,005 risks
+and 812 apis.
 
-The project documentation is all on the OWASP site at the <a href="https://owasp.org/www-project-benchmark">OWASP Benchmark</a> project pages. Please refer to that site for all the project details.
+Lines: 2483
+LOC java: 1260
 
-The current latest release is v1.2. Note that all the releases that are available here: https://github.com/OWASP-Benchmark/BenchmarkJava/releases, are historical. The latest release is always available live by simply cloning or pulling the head of this repository (i.e., git pull).
+### script folder
+generate-java-controller.py - script to generate more apis and risks
 
-Running Benchmark Itself:
-* runBenchmark.sh - run the Benchmark Web Application (accessible via local machine only)
-* runRemoteAccessibleBenchmark.sh - like the above but allows port 8443 to be accessible outside the machine Benchmark is running on.
+## Prerequisite
+- java 11
+
+## Usage
+### Example 1
+Request
+```
+curl --location --request POST 'http://localhost:8080/user/insert' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstName": "lior",
+    "password": "Aa123456!",
+    "email": "koko@domain.com",
+    "info": "something funny"
+    
+}'
+```
+### Example 2
+Request
+```
+curl --location --request GET 'http://localhost:8080/user/get/firstName/byEmail/koko@domain' \
+--header 'Content-Type: application/json' \
+--data-raw ''
+```
+
+### Example 3
+Request
+```
+curl --location --request GET 'http://127.0.0.1:8080/country/get/byId/5'
+```
+Response
+```
+{
+    "id": 5,
+    "countryName": "",
+    "definition": "A country is a distinct part of the world",
+    "a3": "",
+    "phoneCode": "",
+    "displayName": "",
+    "gmtOffset": "",
+    "governmentForm": "DEMOCRACY",
+    "a2": null
+}
+```
+
+
+
+## Swagger UI
+
+- URI: http://localhost:8080/swagger-ui/index.html
+- path location: /src/resources/swagger/sanity-scan-swagger.json
+
+## Maintenance
+- generate a swagger file for each API change and store it under swagger path location 
+
